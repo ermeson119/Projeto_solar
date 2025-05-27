@@ -281,5 +281,44 @@ def exportar_csv():
 def arquivo_upload(filename):
     return send_file(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
+@app.route('/admin/dashboard/dados')
+@login_required
+def dashboard_dados():
+    # Contagem total de formulários
+    total_formularios = Formulario.query.count()
+    
+    # Formulários do dia
+    hoje = datetime.now().date()
+    formularios_dia = Formulario.query.filter(
+        db.func.date(Formulario.data_criacao) == hoje
+    ).count()
+    
+    # Total de usuários ativos
+    total_usuarios = Usuario.query.filter_by(ativo=True).count()
+    
+    # Total de arquivos
+    total_arquivos = Arquivo.query.count()
+    
+    # Formulários recentes (últimos 5)
+    formularios_recentes = Formulario.query.order_by(
+        Formulario.data_criacao.desc()
+    ).limit(5).all()
+    
+    # Formatar dados dos formulários recentes
+    formularios = [{
+        'id': f.id,
+        'nome': f.nome_completo,
+        'data': f.data_criacao.strftime('%d/%m/%Y'),
+        'tipo': 'Casa' if f.tipo_imovel == 'casa' else 'Comércio'
+    } for f in formularios_recentes]
+    
+    return jsonify({
+        'totalFormularios': total_formularios,
+        'formulariosDia': formularios_dia,
+        'totalUsuarios': total_usuarios,
+        'totalArquivos': total_arquivos,
+        'formularios': formularios
+    })
+
 # Inicializar o banco de dados
 init_db()

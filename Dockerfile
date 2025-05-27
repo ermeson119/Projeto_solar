@@ -3,7 +3,7 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # Copiar apenas o requirements.txt do diretório app/ para aproveitar o cache de camadas
-COPY app/requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar o restante do código da aplicação do diretório app/
