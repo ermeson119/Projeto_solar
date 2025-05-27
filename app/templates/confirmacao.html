@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}SolarForms - Solicitação Enviada{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 confirmation-card">
+                <div class="card-body p-5 text-center">
+                    <div class="confirmation-icon mb-4">
+                        <i class="fas fa-check-circle text-success"></i>
+                    </div>
+                    
+                    <h2 class="mb-4">Solicitação Enviada com Sucesso!</h2>
+                    
+                    <p class="lead mb-4">
+                        Obrigado por solicitar um orçamento para instalação de energia solar.
+                        Nossa equipe entrará em contato em breve para discutir os próximos passos.
+                    </p>
+                    
+                    <div class="confirmation-steps mt-5">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="step-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <h5>Análise</h5>
+                                <p>Avaliaremos seu consumo e as características do imóvel</p>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="step-icon">
+                                    <i class="fas fa-calculator"></i>
+                                </div>
+                                <h5>Orçamento</h5>
+                                <p>Prepararemos uma proposta personalizada para você</p>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="step-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <h5>Contato</h5>
+                                <p>Entraremos em contato para apresentar a proposta</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-5">
+                        <a href="{{ url_for('inicio') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-home me-2"></i> Voltar ao Início
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.confirmation-card {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.confirmation-icon {
+    font-size: 80px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.confirmation-steps {
+    margin-top: 2rem;
+}
+
+.step-icon {
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    color: var(--bs-primary);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 1rem auto;
+    transition: all 0.3s ease;
+}
+
+.col-md-4:hover .step-icon {
+    background-color: var(--bs-primary);
+    color: white;
+    transform: translateY(-5px);
+}
+</style>
+{% endblock %}

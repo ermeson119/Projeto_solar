@@ -1,0 +1,386 @@
+{% extends "base.html" %}
+
+{% block title %}SolarForms - Solicitar Orçamento{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white py-3">
+                    <h3 class="mb-0"><i class="fas fa-solar-panel me-2"></i> Orçamento de Energia Solar</h3>
+                    <p class="mb-0 mt-2">Preencha o formulário abaixo para receber um orçamento personalizado</p>
+                </div>
+                
+                <div class="card-body p-4">
+                    <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        {{ form.csrf_token }}
+                        
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-user me-2"></i> Sobre Você
+                            </h4>
+                            <hr>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="nome_completo" class="form-label">Nome completo <span class="text-danger">*</span></label>
+                                    {{ form.nome_completo(class="form-control form-control-lg", placeholder="Seu nome completo") }}
+                                    {% if form.nome_completo.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.nome_completo.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="documento" class="form-label">CPF ou CNPJ <span class="text-danger">*</span></label>
+                                    {{ form.documento(class="form-control form-control-lg", placeholder="000.000.000-00") }}
+                                    {% if form.documento.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.documento.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="telefone" class="form-label">Telefone (WhatsApp) <span class="text-danger">*</span></label>
+                                    {{ form.telefone(class="form-control form-control-lg", placeholder="(00) 00000-0000") }}
+                                    {% if form.telefone.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.telefone.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">E-mail <span class="text-danger">*</span></label>
+                                    {{ form.email(class="form-control form-control-lg", placeholder="seu@email.com") }}
+                                    {% if form.email.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.email.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-house me-2"></i> Onde Fica o Imóvel?
+                            </h4>
+                            <hr>
+                            
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="endereco" class="form-label">Endereço completo <span class="text-danger">*</span></label>
+                                    {{ form.endereco(class="form-control form-control-lg", placeholder="Rua, número, bairro, cidade, estado") }}
+                                    {% if form.endereco.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.endereco.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <label for="tipo_imovel" class="form-label">É casa ou comércio? <span class="text-danger">*</span></label>
+                                    {{ form.tipo_imovel(class="form-select form-select-lg") }}
+                                    {% if form.tipo_imovel.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.tipo_imovel.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="form-check form-switch mt-4 pt-2">
+                                        {{ form.telhado_livre(class="form-check-input") }}
+                                        <label class="form-check-label" for="telhado_livre">
+                                            Tem telhado livre para instalar os painéis solares?
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="form-check form-switch mt-4 pt-2">
+                                        {{ form.telhado_sol(class="form-check-input") }}
+                                        <label class="form-check-label" for="telhado_sol">
+                                            O telhado pega sol direto a maior parte do dia?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-bolt me-2"></i> Sobre Sua Conta de Luz
+                            </h4>
+                            <hr>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="gasto_mensal" class="form-label">Gasta mais ou menos quanto por mês com luz? <span class="text-danger">*</span></label>
+                                    {{ form.gasto_mensal(class="form-control form-control-lg", placeholder="Ex: R$ 300,00") }}
+                                    {% if form.gasto_mensal.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.gasto_mensal.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch mt-4 pt-2">
+                                        {{ form.tem_contas(class="form-check-input") }}
+                                        <label class="form-check-label" for="tem_contas">
+                                            Tem as contas dos últimos meses?
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="tipo_voltagem" class="form-label">A luz é 110V, 220V ou tem as duas? <span class="text-danger">*</span></label>
+                                    {{ form.tipo_voltagem(class="form-select form-select-lg") }}
+                                    {% if form.tipo_voltagem.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.tipo_voltagem.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="qtd_pessoas" class="form-label">Quantas pessoas moram ou trabalham no local? <span class="text-danger">*</span></label>
+                                    {{ form.qtd_pessoas(class="form-control form-control-lg", placeholder="Ex: 4") }}
+                                    {% if form.qtd_pessoas.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.qtd_pessoas.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-lightbulb me-2"></i> Objetivo do Projeto
+                            </h4>
+                            <hr>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="objetivo_projeto" class="form-label">Quer zerar a conta de luz ou só diminuir? <span class="text-danger">*</span></label>
+                                    {{ form.objetivo_projeto(class="form-select form-select-lg") }}
+                                    {% if form.objetivo_projeto.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.objetivo_projeto.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch mt-4 pt-2">
+                                        {{ form.novos_aparelhos(class="form-check-input") }}
+                                        <label class="form-check-label" for="novos_aparelhos">
+                                            Pensa em colocar mais aparelhos no futuro?
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <label for="tipo_sistema" class="form-label">Como prefere que a energia solar funcione? <span class="text-danger">*</span></label>
+                                    {{ form.tipo_sistema(class="form-select form-select-lg") }}
+                                    {% if form.tipo_sistema.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.tipo_sistema.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section mb-4">
+                            <h4 class="form-section-title">
+                                <i class="fas fa-image me-2"></i> Envio de Informações
+                            </h4>
+                            <hr>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="foto_telhado" class="form-label">Foto do telhado (opcional)</label>
+                                    {{ form.foto_telhado(class="form-control form-control-lg") }}
+                                    <div class="form-text">Envie uma foto do telhado onde serão instalados os painéis</div>
+                                    {% if form.foto_telhado.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.foto_telhado.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="foto_conta" class="form-label">Foto da conta de luz mais recente (opcional)</label>
+                                    {{ form.foto_conta(class="form-control form-control-lg") }}
+                                    <div class="form-text">Envie uma foto legível da sua conta de luz mais recente</div>
+                                    {% if form.foto_conta.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.foto_conta.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-12">
+                                    <label for="observacoes" class="form-label">Tem alguma dúvida ou algo que queira comentar? (opcional)</label>
+                                    {{ form.observacoes(class="form-control form-control-lg", rows=3) }}
+                                    {% if form.observacoes.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.observacoes.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-5 py-3">
+                                <i class="fas fa-paper-plane me-2"></i> Enviar Solicitação
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Validação de formulário
+    const forms = document.querySelectorAll('.needs-validation');
+    
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            form.classList.add('was-validated');
+        }, false);
+    });
+    
+    // Máscara para CPF/CNPJ
+    const documentoInput = document.getElementById('documento');
+    if (documentoInput) {
+        documentoInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length <= 11) {
+                // CPF
+                if (value.length > 9) {
+                    value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4');
+                } else if (value.length > 6) {
+                    value = value.replace(/(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3');
+                } else if (value.length > 3) {
+                    value = value.replace(/(\d{3})(\d{0,3})/, '$1.$2');
+                }
+            } else {
+                // CNPJ
+                value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{0,2})/, '$1.$2.$3/$4-$5');
+            }
+            
+            e.target.value = value;
+        });
+    }
+    
+    // Máscara para telefone
+    const telefoneInput = document.getElementById('telefone');
+    if (telefoneInput) {
+        telefoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length > 10) {
+                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else if (value.length > 6) {
+                value = value.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+            } else if (value.length > 2) {
+                value = value.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+            }
+            
+            e.target.value = value;
+        });
+    }
+    
+    // Animação de scroll suave
+    const formSections = document.querySelectorAll('.form-section');
+    
+    function animateSections() {
+        formSections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            
+            if (sectionTop < windowHeight * 0.85) {
+                section.classList.add('fade-in');
+            }
+        });
+    }
+    
+    // Inicializa as animações
+    window.addEventListener('scroll', animateSections);
+    animateSections();
+});
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.form-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.form-section.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.form-section-title {
+    color: var(--bs-primary);
+    font-weight: 600;
+}
+
+.form-check-input:checked {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+</style>
+{% endblock %}

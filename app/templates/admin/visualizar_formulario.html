@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block title %}SolarForms - Visualizar Formulário{% endblock %}
+
+{% block content %}
+<div class="admin-container py-4">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 col-xl-2">
+                {% include 'admin/sidebar.html' %}
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-9 col-xl-10">
+                <div class="admin-header d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2><i class="fas fa-clipboard-check me-2"></i> Detalhes do Formulário</h2>
+                        <p class="text-muted mb-0">Visualizando formulário #{{ formulario.id }}</p>
+                    </div>
+                    
+                    <div>
+                        <a href="{{ url_for('admin_formularios') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left me-2"></i> Voltar
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <!-- Informações do Formulário -->
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-white py-3">
+                                <h5 class="mb-0">Informações do Cliente</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Nome Completo</label>
+                                        <p>{{ formulario.nome_completo }}</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Documento</label>
+                                        <p>{{ formulario.documento }}</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Telefone</label>
+                                        <p>{{ formulario.telefone }}</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">E-mail</label>
+                                        <p>{{ formulario.email }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-white py-3">
+                                <h5 class="mb-0">Informações do Imóvel</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <label class="form-label fw-bold">Endereço Completo</label>
+                                        <p>{{ formulario.endereco }}</p>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label fw-bold">Tipo de Imóvel</label>
+                                        <p>{{ formulario.tipo_imovel|capitalize }}</p>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label fw-bold">Telhado Livre</label>
+                                        <p>{{ 'Sim' if formulario.telhado_livre else 'Não' }}</p>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label fw-bold">Telhado com Sol</label>
+                                        <p>{{ 'Sim' if formulario.telhado_sol else 'Não' }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-white py-3">
+                                <h5 class="mb-0">Informações da Conta de Luz</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Gasto Mensal</label>
+                                        <p>{{ formulario.gasto_mensal }}</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Tem Contas Anteriores</label>
+                                        <p>{{ 'Sim' if formulario.tem_contas else 'Não' }}</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Tipo de Voltagem</label>
+                                        <p>{{ formulario.tipo_voltagem }}</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Qtd de Pessoas</label>
+                                        <p>{{ formulario.qtd_pessoas }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-white py-3">
+                                <h5 class="mb-0">Objetivo do Projeto</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label fw-bold">Objetivo</label>
+                                        <p>{{ formulario.objetivo_projeto|capitalize }}</p>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label fw-bold">Novos Aparelhos</label>
+                                        <p>{{ 'Sim' if formulario.novos_aparelhos else 'Não' }}</p>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label fw-bold">Tipo de Sistema</label>
+                                        <p>{{ formulario.tipo_sistema }}</p>
+                                    </div>
+                                    {% if formulario.observacoes %}
+                                    <div class="col-12">
+                                        <label class="form-label fw-bold">Observações</label>
+                                        <p>{{ formulario.observacoes }}</p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <!-- Informações do Formulário -->
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-white py-3">
+                                <h5 class="mb-0">Detalhes do Formulário</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">ID do Formulário</label>
+                                    <p>#{{ formulario.id }}</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Data de Envio</label>
+                                    <p>{{ formulario.data_criacao.strftime('%d/%m/%Y %H:%M') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Arquivos -->
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white py-3">
+                                <h5 class="mb-0">Arquivos Enviados</h5>
+                            </div>
+                            <div class="card-body">
+                                {% if arquivos %}
+                                    <div class="list-group">
+                                        {% for arquivo in arquivos %}
+                                            <a href="{{ url_for('arquivo_upload', filename=arquivo.nome_arquivo) }}" 
+                                               class="list-group-item list-group-item-action" 
+                                               target="_blank">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">
+                                                        {% if arquivo.tipo == 'telhado' %}
+                                                            <i class="fas fa-home text-primary me-2"></i> Foto do Telhado
+                                                        {% else %}
+                                                            <i class="fas fa-file-invoice-dollar text-success me-2"></i> Conta de Luz
+                                                        {% endif %}
+                                                    </h6>
+                                                </div>
+                                                <small>{{ arquivo.data_upload.strftime('%d/%m/%Y %H:%M') }}</small>
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <div class="text-center py-4">
+                                        <i class="fas fa-folder-open text-muted mb-3" style="font-size: 2rem;"></i>
+                                        <p>Nenhum arquivo enviado.</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

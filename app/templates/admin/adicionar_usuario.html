@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}SolarForms - Adicionar Usuário{% endblock %}
+
+{% block content %}
+<div class="admin-container py-4">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 col-xl-2">
+                {% include 'admin/sidebar.html' %}
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-9 col-xl-10">
+                <div class="admin-header d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2><i class="fas fa-user-plus me-2"></i> Adicionar Usuário</h2>
+                        <p class="text-muted mb-0">Crie um novo usuário para o sistema</p>
+                    </div>
+                    
+                    <div>
+                        <a href="{{ url_for('admin_usuarios') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left me-2"></i> Voltar
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <form method="POST" class="needs-validation" novalidate>
+                                    {{ form.csrf_token }}
+                                    
+                                    <div class="mb-4">
+                                        <label for="nome" class="form-label">Nome completo <span class="text-danger">*</span></label>
+                                        {{ form.nome(class="form-control form-control-lg", placeholder="Nome do usuário") }}
+                                        {% if form.nome.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {% for error in form.nome.errors %}
+                                                    {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label for="email" class="form-label">E-mail <span class="text-danger">*</span></label>
+                                        {{ form.email(class="form-control form-control-lg", placeholder="usuario@exemplo.com") }}
+                                        {% if form.email.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {% for error in form.email.errors %}
+                                                    {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <label for="senha" class="form-label">Senha <span class="text-danger">*</span></label>
+                                            {{ form.senha(class="form-control form-control-lg", placeholder="Senha") }}
+                                            {% if form.senha.errors %}
+                                                <div class="invalid-feedback d-block">
+                                                    {% for error in form.senha.errors %}
+                                                        {{ error }}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <label for="confirmar_senha" class="form-label">Confirmar senha <span class="text-danger">*</span></label>
+                                            {{ form.confirmar_senha(class="form-control form-control-lg", placeholder="Confirme a senha") }}
+                                            {% if form.confirmar_senha.errors %}
+                                                <div class="invalid-feedback d-block">
+                                                    {% for error in form.confirmar_senha.errors %}
+                                                        {{ error }}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="form-check form-switch">
+                                                {{ form.admin(class="form-check-input") }}
+                                                <label class="form-check-label" for="admin">
+                                                    Administrador
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="form-check form-switch">
+                                                {{ form.ativo(class="form-check-input") }}
+                                                <label class="form-check-label" for="ativo">
+                                                    Ativo
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-end">
+                                        <a href="{{ url_for('admin_usuarios') }}" class="btn btn-outline-secondary me-2">Cancelar</a>
+                                        <button type="submit" class="btn btn-primary px-4">
+                                            <i class="fas fa-save me-2"></i> Salvar
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}SolarForms - Login{% endblock %}
+
+{% block content %}
+<div class="container py-5 d-flex align-items-center justify-content-center min-vh-75">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-8 col-lg-5">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-body p-4 p-md-5">
+                    <h3 class="text-center font-weight-light my-4">Acesso ao Painel de Administração</h3>
+                    <p class="text-center mb-4 text-muted">Entre com suas credenciais para acessar o painel</p>
+                    <form method="POST">
+                        {{ form.csrf_token }}
+                        
+                        <div class="form-floating mb-3">
+                            {{ form.email(class="form-control", id="email", placeholder="") }}
+                            <label for="email">Email</label>
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.email.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-floating mb-3">
+                             {{ form.senha(class="form-control", id="senha", placeholder="") }}
+                            <label for="senha">Senha</label>
+                            {% if form.senha.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.senha.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="d-grid mt-4 mb-0">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Entrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                 <div class="card-footer text-center py-3">
+                    <div class="small">
+                        Acesso apenas para administradores.<br>
+                        <a href="{{ url_for('inicio') }}">Voltar para o site</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: var(--light);
+    }
+</style>
+{% endblock %}

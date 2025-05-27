@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}SolarForms - Gerenciar Usuários{% endblock %}
+
+{% block content %}
+<div class="admin-container py-4">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 col-xl-2">
+                {% include 'admin/sidebar.html' %}
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-9 col-xl-10">
+                <div class="admin-header d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2><i class="fas fa-users-cog me-2"></i> Usuários</h2>
+                        <p class="text-muted mb-0">Gerencie os usuários do sistema</p>
+                    </div>
+                    
+                    <div>
+                        <a href="{{ url_for('adicionar_usuario') }}" class="btn btn-primary">
+                            <i class="fas fa-user-plus me-2"></i> Adicionar Usuário
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Lista de Usuários -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>E-mail</th>
+                                        <th>Tipo</th>
+                                        <th>Status</th>
+                                        <th>Data de Criação</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for usuario in usuarios %}
+                                    <tr>
+                                        <td>{{ usuario.id }}</td>
+                                        <td>{{ usuario.nome }}</td>
+                                        <td>{{ usuario.email }}</td>
+                                        <td>
+                                            <span class="badge {% if usuario.admin %}bg-danger{% else %}bg-info{% endif %}">
+                                                {% if usuario.admin %}Administrador{% else %}Usuário{% endif %}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge {% if usuario.ativo %}bg-success{% else %}bg-secondary{% endif %}">
+                                                {% if usuario.ativo %}Ativo{% else %}Inativo{% endif %}
+                                            </span>
+                                        </td>
+                                        <td>{{ usuario.data_criacao.strftime('%d/%m/%Y') }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="{{ url_for('editar_usuario', id=usuario.id) }}" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="{{ url_for('alternar_status', id=usuario.id) }}" class="btn btn-sm btn-outline-{{ 'danger' if usuario.ativo else 'success' }}">
+                                                    {% if usuario.ativo %}
+                                                        <i class="fas fa-user-slash"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-user-check"></i>
+                                                    {% endif %}
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="7" class="text-center py-4">
+                                            <div class="py-5">
+                                                <i class="fas fa-users text-muted mb-3" style="font-size: 3rem;"></i>
+                                                <p class="mb-0">Nenhum usuário encontrado.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

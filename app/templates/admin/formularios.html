@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}SolarForms - Gerenciar Formulários{% endblock %}
+
+{% block content %}
+<div class="admin-container py-4">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 col-xl-2">
+                {% include 'admin/sidebar.html' %}
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-9 col-xl-10">
+                <div class="admin-header d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2><i class="fas fa-clipboard-list me-2"></i> Formulários</h2>
+                        <p class="text-muted mb-0">Gerencie os formulários enviados pelos usuários</p>
+                    </div>
+                    
+                    <div class="d-flex">
+                        <a href="{{ url_for('exportar_csv') }}" class="btn btn-success">
+                            <i class="fas fa-file-csv me-2"></i> Exportar CSV
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Filtros -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <form class="row g-3" method="GET">
+                            <div class="col-md-4">
+                                <label for="busca" class="form-label">Buscar por nome ou documento</label>
+                                <input type="text" class="form-control" id="busca" name="busca" placeholder="Digite para buscar...">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="tipo_imovel" class="form-label">Tipo de Imóvel</label>
+                                <select class="form-select" id="tipo_imovel" name="tipo_imovel">
+                                    <option value="">Todos</option>
+                                    <option value="casa">Casa</option>
+                                    <option value="comercio">Comércio</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="data_inicio" class="form-label">Data de Envio</label>
+                                <input type="date" class="form-control" id="data_inicio" name="data_inicio">
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-search me-2"></i> Filtrar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Lista de Formulários -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Telefone</th>
+                                        <th>Tipo Imóvel</th>
+                                        <th>Data de Envio</th>
+                                        <th>Objetivo</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for form in formularios.items %}
+                                    <tr>
+                                        <td>{{ form.id }}</td>
+                                        <td>{{ form.nome_completo }}</td>
+                                        <td>{{ form.telefone }}</td>
+                                        <td>
+                                            <span class="badge {% if form.tipo_imovel == 'casa' %}bg-info{% else %}bg-primary{% endif %}">
+                                                {{ form.tipo_imovel|capitalize }}
+                                            </span>
+                                        </td>
+                                        <td>{{ form.data_criacao.strftime('%d/%m/%Y %H:%M') }}</td>
+                                        <td>{{ form.objetivo_projeto|capitalize }}</td>
+                                        <td>
+                                            <a href="{{ url_for('visualizar_formulario', id=form.id) }}" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="7" class="text-center py-4">
+                                            <div class="py-5">
+                                                <i class="fas fa-clipboard text-muted mb-3" style="font-size: 3rem;"></i>
+                                                <p class="mb-0">Nenhum formulário encontrado.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    {% if formularios.pages > 1 %}
+                    <div class="card-footer bg-white">
+                        <nav>
+                            <ul class="pagination justify-content-center mb-0">
+                                <li class="page-item {% if formularios.page == 1 %}disabled{% endif %}">
+                                    <a class="page-link" href="{{ url_for('admin_formularios', page=formularios.prev_num) }}">Anterior</a>
+                                </li>
+                                
+                                {% for page_num in formularios.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                                    {% if page_num %}
+                                        <li class="page-item {% if formularios.page == page_num %}active{% endif %}">
+                                            <a class="page-link" href="{{ url_for('admin_formularios', page=page_num) }}">{{ page_num }}</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item disabled">
+                                            <span class="page-link">...</span>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                <li class="page-item {% if formularios.page == formularios.pages %}disabled{% endif %}">
+                                    <a class="page-link" href="{{ url_for('admin_formularios', page=formularios.next_num) }}">Próxima</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
