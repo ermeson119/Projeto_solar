@@ -22,7 +22,7 @@ Um sistema completo para gerenciamento de formulários de orçamentos de energia
 
 ```bash
 git clone <url-do-repositorio>
-cd solarforms
+cd Projeto_solar
 ```
 
 2. Inicie os contêineres com Docker Compose:
@@ -34,7 +34,7 @@ docker-compose up --build
 3. Acesse o sistema em seu navegador:
 
 ```
-http://localhost:5000
+http://127.0.0.1:8080/
 ```
 
 ## Estrutura do Projeto
@@ -44,14 +44,15 @@ http://localhost:5000
 │   ├── static/           # Arquivos estáticos (CSS, JS, imagens)
 │   ├── templates/        # Templates HTML
 │   ├── uploads/          # Diretório para uploads de arquivos
-│   ├── app.py            # Aplicação principal Flask
+│   ├── routes.py         # Aplicação principal Flask
 │   ├── config.py         # Configurações do sistema
 │   ├── forms.py          # Definições de formulários WTForms
 │   ├── models.py         # Modelos de dados SQLAlchemy
-│   ├── Dockerfile        # Configuração do contêiner da aplicação
-│   └── requirements.txt  # Dependências Python
+│ 
+├── Dockerfile        # Configuração do contêiner da aplicação  
 ├── docker-compose.yml    # Configuração do Docker Compose
 └── README.md             # Documentação
+└── requirements.txt  # Dependências Python
 ```
 
 ## Acesso Inicial
@@ -62,12 +63,6 @@ Um usuário administrador é criado automaticamente na primeira execução:
 - Senha: admin123
 
 **IMPORTANTE:** Altere esta senha após o primeiro login.
-
-## Desenvolvimento
-
-### Variáveis, Funções e Métodos
-
-Conforme solicitado, todas as variáveis, funções e métodos foram implementados em português (pt-BR) para manter a padronização do código.
 
 ### Tecnologias Utilizadas
 
