@@ -3,19 +3,28 @@
 {% block title %}SolarForms - Login{% endblock %}
 
 {% block content %}
-<div class="container py-5 d-flex align-items-center justify-content-center min-vh-75">
-    <div class="row justify-content-center w-100">
-        <div class="col-md-8 col-lg-5">
-            <div class="card shadow-lg border-0 rounded-lg mt-5">
-                <div class="card-body p-4 p-md-5">
-                    <h3 class="text-center font-weight-light my-4">Acesso ao Painel de Administração</h3>
-                    <p class="text-center mb-4 text-muted">Entre com suas credenciais para acessar o painel</p>
-                    <form method="POST">
+<div class="login-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-5">
+                <div class="login-card">
+                    <div class="login-header text-center mb-4">
+                        <i class="fas fa-solar-panel fa-3x text-primary mb-3"></i>
+                        <h2 class="fw-bold">Bem-vindo de volta</h2>
+                        <p class="text-muted">Acesse o painel administrativo</p>
+                    </div>
+
+                    <form method="POST" class="login-form">
                         {{ form.csrf_token }}
                         
-                        <div class="form-floating mb-3">
-                            {{ form.email(class="form-control", id="email", placeholder="") }}
-                            <label for="email">Email</label>
+                        <div class="form-group mb-4">
+                            <label for="email" class="form-label">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                {{ form.email(class="form-control", id="email", placeholder="Seu email") }}
+                            </div>
                             {% if form.email.errors %}
                                 <div class="invalid-feedback d-block">
                                     {% for error in form.email.errors %}
@@ -25,9 +34,14 @@
                             {% endif %}
                         </div>
                         
-                        <div class="form-floating mb-3">
-                             {{ form.senha(class="form-control", id="senha", placeholder="") }}
-                            <label for="senha">Senha</label>
+                        <div class="form-group mb-4">
+                            <label for="senha" class="form-label">Senha</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                {{ form.senha(class="form-control", id="senha", placeholder="Sua senha") }}
+                            </div>
                             {% if form.senha.errors %}
                                 <div class="invalid-feedback d-block">
                                     {% for error in form.senha.errors %}
@@ -37,17 +51,20 @@
                             {% endif %}
                         </div>
                         
-                        <div class="d-grid mt-4 mb-0">
+                        <div class="d-grid mt-4">
                             <button type="submit" class="btn btn-primary btn-lg">
-                                Entrar
+                                <i class="fas fa-sign-in-alt me-2"></i>Entrar
                             </button>
                         </div>
                     </form>
-                </div>
-                 <div class="card-footer text-center py-3">
-                    <div class="small">
-                        Acesso apenas para administradores.<br>
-                        <a href="{{ url_for('inicio') }}">Voltar para o site</a>
+
+                    <div class="login-footer text-center mt-4">
+                        <p class="text-muted mb-0">
+                            Acesso restrito para administradores
+                        </p>
+                        <a href="{{ url_for('inicio') }}" class="btn btn-link">
+                            <i class="fas fa-arrow-left me-1"></i>Voltar para o site
+                        </a>
                     </div>
                 </div>
             </div>
@@ -58,8 +75,117 @@
 
 {% block extra_css %}
 <style>
-    body {
-        background-color: var(--light);
+    .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 2rem 0;
+    }
+
+    .login-card {
+        background: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 2.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+    }
+
+    .login-header {
+        margin-bottom: 2rem;
+    }
+
+    .login-header i {
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+    .login-header h2 {
+        color: #2c3e50;
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-label {
+        color: #2c3e50;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .input-group {
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    .input-group-text {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-right: none;
+        color: #6c757d;
+    }
+
+    .form-control {
+        border: 1px solid #dee2e6;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.15);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-link:hover {
+        color: var(--primary-dark);
+        transform: translateX(-3px);
+    }
+
+    .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    @media (max-width: 767.98px) {
+        .login-container {
+            padding: 1rem;
+        }
+
+        .login-card {
+            padding: 1.5rem;
+        }
     }
 </style>
 {% endblock %}
