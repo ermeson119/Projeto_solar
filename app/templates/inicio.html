@@ -5,29 +5,32 @@
 {% block content %}
 <!-- Hero Section -->
 <section class="hero position-relative overflow-hidden">
+    <div class="hero-background">
+        <img src="{{ url_for('static', filename='img/solar.png') }}" 
+             alt="Telhado com Energia Solar" 
+             class="hero-bg-image">
+    </div>
+    <div class="hero-overlay"></div>
     <div class="hero-pattern"></div>
     <div class="container position-relative">
         <div class="row align-items-center min-vh-75 py-5">
             <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-4 text-white animate__animated animate__fadeInUp">
-                    Economize com Energia Solar
-                </h1>
-                <p class="lead text-white-90 mb-5 animate__animated animate__fadeInUp animate__delay-1s">
-                    Reduza sua conta de luz em até 95% e contribua para um futuro mais sustentável.
-                    Solicite um orçamento personalizado para sua casa ou comércio.
-                </p>
-                <div class="d-flex gap-3 animate__animated animate__fadeInUp animate__delay-2s">
-                    <a href="{{ url_for('formulario') }}" class="btn btn-primary btn-lg">
-                        <i class="fas fa-clipboard-list me-2"></i> Solicitar Orçamento
-                    </a>
-                    <a href="#beneficios" class="btn btn-outline-light btn-lg">
-                        <i class="fas fa-arrow-down me-2"></i> Saiba Mais
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-6 d-none d-lg-block">
-                <div class="hero-image-wrapper">
-                    <img src="{{ url_for('static', filename='img/roof.png') }}" alt="Telhado com Energia Solar" class="img-fluid animate__animated animate__fadeIn animate__delay-1s">
+                <div class="hero-content">
+                    <h1 class="display-4 fw-bold mb-4 text-white animate__animated animate__fadeInUp">
+                        Economize com Energia Solar
+                    </h1>
+                    <p class="lead text-white-90 mb-5 animate__animated animate__fadeInUp animate__delay-1s">
+                        Reduza sua conta de luz em até 95% e contribua para um futuro mais sustentável.
+                        Solicite um orçamento personalizado para sua casa ou comércio.
+                    </p>
+                    <div class="d-flex gap-3 animate__animated animate__fadeInUp animate__delay-2s">
+                        <a href="{{ url_for('formulario') }}" class="btn btn-primary btn-lg shadow-lg hover-scale">
+                            <i class="fas fa-clipboard-list me-2"></i> Solicitar Orçamento
+                        </a>
+                        <a href="#beneficios" class="btn btn-outline-light btn-lg shadow-lg hover-scale">
+                            <i class="fas fa-arrow-down me-2"></i> Saiba Mais
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -156,15 +159,20 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-5 bg-gradient-primary text-white">
+<section class="cta-section">
     <div class="container">
-        <div class="row align-items-center text-center">
-            <div class="col-lg-8 mx-auto">
-                <h2 class="fw-bold display-6 mb-4">Pronto para começar a economizar?</h2>
-                <p class="lead mb-4">Solicite um orçamento gratuito e descubra quanto você pode economizar com energia solar.</p>
-                <a href="{{ url_for('formulario') }}" class="btn btn-light btn-lg">
-                    <i class="fas fa-clipboard-list me-2"></i> Solicitar Orçamento Gratuito
-                </a>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-5 fw-bold mb-4">Pronto para começar a economizar?</h2>
+                <p class="lead mb-5">Solicite um orçamento gratuito e descubra quanto você pode economizar com energia solar.</p>
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="{{ url_for('formulario') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-clipboard-list me-2"></i> Solicitar Orçamento
+                    </a>
+                    <a href="#beneficios" class="btn btn-outline-dark btn-lg">
+                        <i class="fas fa-arrow-down me-2"></i> Saiba Mais
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -182,12 +190,40 @@
     }
 
     .hero {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         position: relative;
+        min-height: 100vh;
         overflow: hidden;
-        min-height: 85vh;
-        display: flex;
-        align-items: center;
+        padding-top: 80px; /* Ajuste este valor de acordo com a altura do seu header */
+    }
+
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .hero-bg-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transform: scale(1.1);
+        animation: zoomEffect 20s ease-in-out infinite alternate;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, 
+            rgba(26, 26, 26, 0.95) 0%,
+            rgba(44, 62, 80, 0.85) 100%);
+        z-index: 2;
     }
 
     .hero-pattern {
@@ -197,25 +233,48 @@
         right: 0;
         bottom: 0;
         background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        opacity: 0.1;
+        z-index: 3;
     }
 
-    .hero-image-wrapper {
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.2), transparent 70%),
+                    radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.2), transparent 70%);
+        z-index: 4;
+    }
+
+    .hero-content {
         position: relative;
-        animation: float 6s ease-in-out infinite;
-        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+        z-index: 5;
+        padding: 2rem;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     }
 
-    .process-image-wrapper {
-        position: relative;
-        animation: float 6s ease-in-out infinite;
-        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+    @keyframes zoomEffect {
+        0% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1.2);
+        }
     }
 
-    @keyframes float {
-        0% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-20px) rotate(2deg); }
-        100% { transform: translateY(0px) rotate(0deg); }
+    .hover-scale {
+        transition: all 0.3s ease;
+    }
+
+    .hover-scale:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important;
     }
 
     .feature-icon {
@@ -332,18 +391,76 @@
         line-height: 1.6;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 991.98px) {
         .hero {
             min-height: auto;
             padding: 4rem 0;
         }
+        
+        .hero-content {
+            margin: 2rem 0;
+        }
+    }
 
-        .hero-image-wrapper {
-            margin-top: 2rem;
+    .cta-section {
+        padding: 5rem 0;
+        background-color: #f8f9fa;
+        position: relative;
+    }
+
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(0, 0, 0, 0.1) 50%, 
+            transparent 100%);
+    }
+
+    .cta-section .btn {
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .cta-section .btn-primary {
+        background: var(--primary);
+        border: none;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+    }
+
+    .cta-section .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .cta-section .btn-outline-dark {
+        border: 2px solid #343a40;
+    }
+
+    .cta-section .btn-outline-dark:hover {
+        background: #343a40;
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 991.98px) {
+        .cta-section {
+            padding: 4rem 0;
         }
 
-        .process-image-wrapper {
-            margin-bottom: 2rem;
+        .cta-section .d-flex {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .cta-section .btn {
+            width: 100%;
         }
     }
 </style>
