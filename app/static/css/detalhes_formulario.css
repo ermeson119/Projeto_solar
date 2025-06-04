@@ -1,0 +1,30 @@
+
+/* Botao Whatsapp */
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(37, 211, 102, 0.2);
+}
+
+.whatsapp-btn:hover {
+    background-color: #128C7E;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-btn i {
+    font-size: 1.1rem;
+}
+
+.whatsapp-btn span {
+    display: inline-block;
+}
