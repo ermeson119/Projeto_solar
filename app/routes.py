@@ -168,8 +168,44 @@ def admin_dashboard():
 def admin_formularios():
     page = request.args.get('page', 1, type=int)
     per_page = 10
-    formularios = Formulario.query.order_by(Formulario.data_criacao.desc()).paginate(page=page, per_page=per_page)
-    return render_template('admin/formularios.html', formularios=formularios)
+    
+    # Inicializa a query
+    query = Formulario.query
+    
+    # Aplica filtros
+    busca = request.args.get('busca', '').strip()
+    tipo_imovel = request.args.get('tipo_imovel', '')
+    data_inicio = request.args.get('data_inicio', '')
+    
+    if busca:
+        query = query.filter(
+            db.or_(
+                Formulario.nome_completo.ilike(f'%{busca}%'),
+                Formulario.documento.ilike(f'%{busca}%')
+            )
+        )
+    
+    if tipo_imovel:
+        query = query.filter(Formulario.tipo_imovel == tipo_imovel)
+    
+    if data_inicio:
+        try:
+            data_inicio = datetime.strptime(data_inicio, '%Y-%m-%d')
+            query = query.filter(db.func.date(Formulario.data_criacao) >= data_inicio)
+        except ValueError:
+            pass
+    
+    # Ordena por data de criação (mais recente primeiro)
+    query = query.order_by(Formulario.data_criacao.desc())
+    
+    # Paginação
+    formularios = query.paginate(page=page, per_page=per_page)
+    
+    return render_template('admin/formularios.html', 
+                         formularios=formularios,
+                         busca=busca,
+                         tipo_imovel=tipo_imovel,
+                         data_inicio=data_inicio)
 
 @app.route('/admin/formulario/<int:id>')
 @login_required

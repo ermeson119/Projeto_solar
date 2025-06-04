@@ -32,19 +32,21 @@
                         <form class="row g-3" method="GET">
                             <div class="col-md-4">
                                 <label for="busca" class="form-label">Buscar por nome ou documento</label>
-                                <input type="text" class="form-control" id="busca" name="busca" placeholder="Digite para buscar...">
+                                <input type="text" class="form-control" id="busca" name="busca" 
+                                       placeholder="Digite para buscar..." value="{{ busca }}">
                             </div>
                             <div class="col-md-3">
                                 <label for="tipo_imovel" class="form-label">Tipo de Imóvel</label>
                                 <select class="form-select" id="tipo_imovel" name="tipo_imovel">
                                     <option value="">Todos</option>
-                                    <option value="casa">Casa</option>
-                                    <option value="comercio">Comércio</option>
+                                    <option value="casa" {% if tipo_imovel == 'casa' %}selected{% endif %}>Casa</option>
+                                    <option value="comercio" {% if tipo_imovel == 'comercio' %}selected{% endif %}>Comércio</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label for="data_inicio" class="form-label">Data de Envio</label>
-                                <input type="date" class="form-control" id="data_inicio" name="data_inicio">
+                                <input type="date" class="form-control" id="data_inicio" name="data_inicio" 
+                                       value="{{ data_inicio }}">
                             </div>
                             <div class="col-md-2 d-flex align-items-end">
                                 <button type="submit" class="btn btn-primary w-100">
