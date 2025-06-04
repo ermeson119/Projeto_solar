@@ -341,5 +341,60 @@ def dashboard_dados():
         'formularios': formularios
     })
 
+#Rota para exportar o formulário em csv de uma unica pessoa.
+@app.route('/admin/formulario/<int:id>/exportar_csv')
+@login_required
+def exportar_formulario_csv(id):
+    formulario = Formulario.query.get_or_404(id)
+    
+    output = io.StringIO()
+    writer = csv.writer(output, quoting=csv.QUOTE_ALL, delimiter=',', escapechar='\\')
+    
+    # Cabeçalho
+    writer.writerow([
+        'ID', 'Data', 'Nome Completo', 'Documento', 'Telefone', 'Email', 
+        'Endereço', 'Tipo Imóvel', 'Telhado Livre', 'Telhado Sol', 
+        'Gasto Mensal', 'Tem Contas', 'Tipo Voltagem', 'Qtd Pessoas', 
+        'Objetivo Projeto', 'Novos Aparelhos', 'Tipo Sistema', 'Observações'
+    ])
+    
+    # Limpa e formata os dados antes de escrever
+    nome_completo = formulario.nome_completo.replace('\n', ' ').strip() if formulario.nome_completo else ''
+    documento = formulario.documento.replace('\n', ' ').strip() if formulario.documento else ''
+    telefone = formulario.telefone.replace('\n', ' ').strip() if formulario.telefone else ''
+    email = formulario.email.replace('\n', ' ').strip() if formulario.email else ''
+    endereco = formulario.endereco.replace('\n', ' ').strip() if formulario.endereco else ''
+    observacoes = formulario.observacoes.replace('\n', ' ').strip() if formulario.observacoes else ''
+    
+    # Dados
+    writer.writerow([
+        formulario.id,
+        formulario.data_criacao.strftime('%d/%m/%Y %H:%M'),
+        nome_completo,
+        documento,
+        telefone,
+        email,
+        endereco,
+        formulario.tipo_imovel,
+        'Sim' if formulario.telhado_livre else 'Não',
+        'Sim' if formulario.telhado_sol else 'Não',
+        formulario.gasto_mensal if formulario.gasto_mensal else '',
+        'Sim' if formulario.tem_contas else 'Não',
+        formulario.tipo_voltagem if formulario.tipo_voltagem else '',
+        formulario.qtd_pessoas if formulario.qtd_pessoas else '',
+        formulario.objetivo_projeto if formulario.objetivo_projeto else '',
+        'Sim' if formulario.novos_aparelhos else 'Não',
+        formulario.tipo_sistema if formulario.tipo_sistema else '',
+        observacoes
+    ])
+    
+    output.seek(0)
+    return send_file(
+        io.BytesIO(output.getvalue().encode('utf-8-sig')),
+        mimetype='text/csv',
+        as_attachment=True,
+        download_name=f'formulario_{formulario.id}_{datetime.now().strftime("%Y%m%d_%H%M")}.csv'
+    )
+
 # Inicializar o banco de dados
 init_db()

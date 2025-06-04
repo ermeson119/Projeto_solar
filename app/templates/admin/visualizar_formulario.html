@@ -24,8 +24,11 @@
                     </div>
                     
                     <div>
-                        <a href="{{ url_for('admin_formularios') }}" class="btn btn-outline-primary">
+                        <a href="{{ url_for('admin_formularios') }}" class="btn btn-outline-primary me-2">
                             <i class="fas fa-arrow-left me-2"></i> Voltar
+                        </a>
+                        <a href="{{ url_for('exportar_formulario_csv', id=formulario.id) }}" class="btn btn-success">
+                            <i class="fas fa-file-csv me-2"></i> Exportar CSV
                         </a>
                     </div>
                 </div>
