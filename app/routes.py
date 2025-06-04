@@ -248,7 +248,7 @@ def exportar_csv():
     formularios = Formulario.query.order_by(Formulario.data_criacao.desc()).all()
     
     output = io.StringIO()
-    writer = csv.writer(output)
+    writer = csv.writer(output, quoting=csv.QUOTE_ALL, delimiter=',', escapechar='\\')
     
     # Cabeçalho
     writer.writerow([
@@ -260,12 +260,33 @@ def exportar_csv():
     
     # Dados
     for f in formularios:
+        # Limpa e formata os dados antes de escrever
+        nome_completo = f.nome_completo.replace('\n', ' ').strip() if f.nome_completo else ''
+        documento = f.documento.replace('\n', ' ').strip() if f.documento else ''
+        telefone = f.telefone.replace('\n', ' ').strip() if f.telefone else ''
+        email = f.email.replace('\n', ' ').strip() if f.email else ''
+        endereco = f.endereco.replace('\n', ' ').strip() if f.endereco else ''
+        observacoes = f.observacoes.replace('\n', ' ').strip() if f.observacoes else ''
+        
         writer.writerow([
-            f.id, f.data_criacao.strftime('%d/%m/%Y %H:%M'), f.nome_completo, f.documento,
-            f.telefone, f.email, f.endereco, f.tipo_imovel, 
-            'Sim' if f.telhado_livre else 'Não', 'Sim' if f.telhado_sol else 'Não',
-            f.gasto_mensal, 'Sim' if f.tem_contas else 'Não', f.tipo_voltagem, f.qtd_pessoas,
-            f.objetivo_projeto, 'Sim' if f.novos_aparelhos else 'Não', f.tipo_sistema, f.observacoes
+            f.id,
+            f.data_criacao.strftime('%d/%m/%Y %H:%M'),
+            nome_completo,
+            documento,
+            telefone,
+            email,
+            endereco,
+            f.tipo_imovel,
+            'Sim' if f.telhado_livre else 'Não',
+            'Sim' if f.telhado_sol else 'Não',
+            f.gasto_mensal if f.gasto_mensal else '',
+            'Sim' if f.tem_contas else 'Não',
+            f.tipo_voltagem if f.tipo_voltagem else '',
+            f.qtd_pessoas if f.qtd_pessoas else '',
+            f.objetivo_projeto if f.objetivo_projeto else '',
+            'Sim' if f.novos_aparelhos else 'Não',
+            f.tipo_sistema if f.tipo_sistema else '',
+            observacoes
         ])
     
     output.seek(0)
