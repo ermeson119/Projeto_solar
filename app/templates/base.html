@@ -112,11 +112,11 @@
                 <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
                     <h5 class="text-white mb-4">Links Rápidos</h5>
                     <ul class="footer-links">
-                        <li><a href="{{ url_for('inicio') }}">Início</a></li>
-                        <li><a href="#beneficios">Benefícios</a></li>
-                        <li><a href="#processo">Processo</a></li>
-                        <li><a href="#sobre">Sobre Nós</a></li>
-                        <li><a href="#contato">Contato</a></li>
+                        <li><a href="{{ url_for('inicio') }}" style="position: relative; z-index: 10;">Início</a></li>
+                        {% if request.endpoint == 'inicio' %}
+                            <li><a href="#beneficios" style="position: relative; z-index: 10;">Benefícios</a></li>
+                            <li><a href="#processo" style="position: relative; z-index: 10;">Processo</a></li>
+                        {% endif %}
                     </ul>
                 </div>
                 
