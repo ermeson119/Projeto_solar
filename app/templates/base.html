@@ -22,7 +22,7 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url_for('inicio') }}">
-                    <i class="fas fa-solar-panel me-2"></i>
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="height: 40px; object-fit: contain; margin-right: 16px;">
                     <span>SolarForms</span>
                 </a>
                 
@@ -97,7 +97,7 @@
             <div class="row g-4">
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <div class="footer-brand mb-4">
-                        <i class="fas fa-solar-panel me-2"></i>
+                        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="height: 150px; min-width: 120px; object-fit: contain; margin-right: 10px;">
                         <span class="h4 mb-0">SolarForms</span>
                     </div>
                     <p class="text-white-50 mb-4">Transformando a energia solar em economia para sua casa ou negócio. Soluções sustentáveis e eficientes para um futuro mais limpo.</p>
@@ -189,17 +189,19 @@
         .header {
             z-index: 1000;
             transition: all 0.3s ease;
-            background: rgba(0, 0, 0, 0.2);
+            background: #1a1a1a;
             backdrop-filter: blur(10px);
+            padding-top: 8px;
+            padding-bottom: 8px;
         }
 
         .header.scrolled {
-            background: rgba(0, 0, 0, 0.9);
+            background: #1a1a1a;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
         }
 
         .navbar {
-            padding: 1rem 0;
+            padding: 0.5rem 0;
         }
 
         .navbar-brand {

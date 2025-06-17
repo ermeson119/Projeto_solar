@@ -1,8 +1,0 @@
-Este diretório conterá as imagens estáticas do sistema, como:
-
-- favicon.png
-- solar-panel.png
-- process.png
-- pattern.png
-
-Por favor, adicione imagens apropriadas para o tema de energia solar.
